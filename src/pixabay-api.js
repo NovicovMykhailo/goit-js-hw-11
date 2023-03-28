@@ -32,11 +32,7 @@ const API_KEY = '34707727-e20630cf7e49276d83ab15980';
         "user": "Josch13",
         "userImageURL": "https://cdn.pixabay.com/user/2013/11/05/02-10-23-764_250x250.jpg",
     },
-    {
-        "id": 73424,
-        ...
-    },
-    ...
+
 ]
 }
  */

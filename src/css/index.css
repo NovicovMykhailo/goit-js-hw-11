@@ -1,3 +1,23 @@
-body{
-    background-color: tomato;
+body {
+  background-color: tomato;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search-form {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.search-form > input {
+  padding: 10px 25px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid grey;
+}
+.search-form > button {
+  cursor: pointer;
+}
+
+.load-more {
+  cursor: pointer;
 }
