@@ -32,7 +32,7 @@ img {
   gap: 15px;
 }
 
-.search-form > input {
+.query-input {
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1;
@@ -43,12 +43,13 @@ img {
 
   border-radius: 1.5rem;
   outline: none;
+  position: relative;
 
   border: 0 solid #e2e8f0;
   box-shadow: 0 0px 6px #a6afc3b3;
 }
 
-.search-form > input::placeholder {
+.query-input::placeholder {
   font-weight: 400;
   font-size: small;
   color: #676666;
@@ -56,7 +57,7 @@ img {
   text-transform: uppercase;
 }
 
-.search-form > input:focus {
+.query-input:focus {
   outline: 1px solid #ccc;
 }
 
@@ -83,4 +84,49 @@ button {
 button:hover {
   background-color: #1e293b;
   color: #fff;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+
+  transition: opacity 500ms linear;
+
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-color: #828282 transparent #828282 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+
+  position: relative;
+  z-index: 10;
+  left: 40px;
+}
+
+.input-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+.gallery{
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr;
+    grid-template-rows: 1fr;
+    gap: 25px;
+}
+
+
+
+
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

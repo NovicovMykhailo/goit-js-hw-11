@@ -13,14 +13,20 @@
   </head>
   <body>
     <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
+      <div class="input-spinner">
+        <div class="lds-dual-ring"></div>
+        <input
+          class="query-input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+      </div>
+
       <button type="submit">Search</button>
     </form>
+
     <div class="gallery">
       <!-- Картки зображень -->
     </div>

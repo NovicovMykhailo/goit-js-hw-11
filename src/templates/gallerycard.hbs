@@ -1,0 +1,23 @@
+{{#each card}}
+  <div class='photo-card'>
+    <img src='{{this.imageURL}}' alt='{{this.tags}}' loading='lazy' />
+    <div class='info'>
+      <p class='info-item'>
+        <b>Likes</b>
+        <p>{{this.likes}}</p>
+      </p>
+      <p class='info-item'>
+        <b>Views</b>
+        <p>{{this.views}}</p>
+      </p>
+      <p class='info-item'>
+        <b>Comments</b>
+        <p>{{this.comments}}</p>
+      </p>
+      <p class='info-item'>
+        <b>Downloads</b>
+        <p>{{this.downloads}}</p>
+      </p>
+    </div>
+  </div>
+{{/each}}
