@@ -9,12 +9,15 @@ export class PixabayApi {
   options = new URLSearchParams([
     ['orientation', 'horizontal'],
     ['safesearch', 'true'],
-    ['per_page', 24],
+    ['per_page', 3],
   ]);
+  page = 1;
 
   async fetch(q) {
     const response = await fetch(
-      `${this.#BASE_URL}?key=${this.#API_KEY}&q=${q}&${this.options}`
+      `${this.#BASE_URL}?key=${this.#API_KEY}&q=${q}&page=${this.page}&${
+        this.options
+      }`
     );
     return await response.json();
   }
@@ -54,3 +57,4 @@ export class PixabayApi {
 ]
 }
  */
+

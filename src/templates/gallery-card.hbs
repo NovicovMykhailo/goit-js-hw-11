@@ -1,22 +1,22 @@
 {{#each card}}
   <div class='photo-card'>
-    <img src='{{this.imageURL}}' alt='{{this.tags}}' loading='lazy' />
+    <img src='{{card.imageURL}}' alt='{{card.tags}}' loading='lazy' />
     <div class='info'>
       <p class='info-item'>
         <b>Likes</b>
-        <p>{{this.likes}}</p>
+        <p>'{{card.likes}}'</p>
       </p>
       <p class='info-item'>
         <b>Views</b>
-        <p>{{this.views}}</p>
+        <p>'{{card.views}}'</p>
       </p>
       <p class='info-item'>
         <b>Comments</b>
-        <p>{{this.comments}}</p>
+        <p>'{{card.comments}}'</p>
       </p>
       <p class='info-item'>
         <b>Downloads</b>
-        <p>{{this.downloads}}</p>
+        <p>'{{card.downloads}}'</p>
       </p>
     </div>
   </div>
