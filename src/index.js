@@ -8,7 +8,6 @@ import { PixabayApi } from './pixabay-api';
 
 const pixabayApi = new PixabayApi();
 
-
 const refs = {
   gallery: document.querySelector('.gallery'),
   form: document.querySelector('.search-form'),
@@ -22,7 +21,9 @@ refs.form.addEventListener('submit', e => {
   e.preventDefault();
   refs.spinner.style.opacity = 1;
   try {
-    getImages(inputEl.value).then(() => (refs.spinner.style.opacity = 0));
+    getImages(inputEl.value).then(() => {
+      refs.spinner.style.opacity = 0;
+    });
   } catch {
     refs.spinner.style.opacity = 0;
     Notiflix.Notify.error('Sol lucet omnibus');
@@ -32,33 +33,35 @@ refs.form.addEventListener('submit', e => {
 async function getImages(query) {
   return await pixabayApi
     .fetch(query)
-    .then(data => data.hits)
+    .then(data => {
+      if (data.totalHits !== 0) {
+        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      } else {
+        Notiflix.Notify.info(
+          `Sorry! We can't find any images. at your request. Please try again`
+        );
+      }
+
+      return data.hits;
+    })
     .then(image => {
       const markup = image.map(createMarkup);
       refs.gallery.innerHTML = markup.join('');
-
-      let gallery = new SimpleLightbox('.gallery a');
-      gallery.on('show.simplelightbox');
+      addSimpleLightBox();
     });
 }
 
+function addSimpleLightBox() {
+  const options = {
+    enableKeyboard: true,
+    docClose: true,
+    doubleTapZoom: 2,
+    scrollZoom: true,
+  };
 
+  let gallery = new SimpleLightbox('.gallery a', options);
+  gallery.on('show.simplelightbox');
+}
 
-
-
-// const simpleboxOptions = [
-//   (gallery.options.captionsData = 'alt'),
-//   (gallery.options.captionDelay = 250),
-//   (gallery.options.overlayOpacity = 0.1),
-//   (gallery.options.showCounter = true),
-// ];
-
-// function simpleboxKeyNav() {
-//   window.addEventListener('keypress', event => {
-//     if (event.key === 'ArrowRight') {
-//       gallery.next();
-//     } else if (event.key === 'ArrowLeft') {
-//       gallery.prev();
-//     }
-//   });
-// }
+// SimpleLightBox Бібліотека містить метод refresh(), 
+// який обов'язково потрібно викликати щоразу після додавання нової групи карток зображень.
