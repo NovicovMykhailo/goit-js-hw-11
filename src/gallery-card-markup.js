@@ -1,23 +1,25 @@
-{{#each card}}
-  <div class='photo-card'>
-    <img src='{{card.imageURL}}' alt='{{card.tags}}' loading='lazy' />
+
+export function createMarkup(obj) {
+  return `  <a class='photo-card'
+    href=${obj.largeImageURL}>
+    <img src=${obj.webformatURL} alt=${obj.tags} loading='lazy' />
     <div class='info'>
       <p class='info-item'>
         <b>Likes</b>
-        <p>'{{card.likes}}'</p>
+        ${obj.likes}
       </p>
       <p class='info-item'>
         <b>Views</b>
-        <p>'{{card.views}}'</p>
+        ${obj.views}
       </p>
       <p class='info-item'>
         <b>Comments</b>
-        <p>'{{card.comments}}'</p>
+        ${obj.comments}
       </p>
       <p class='info-item'>
         <b>Downloads</b>
-        <p>'{{card.downloads}}'</p>
+        ${obj.downloads}
       </p>
     </div>
-  </div>
-{{/each}}
+  </a>`;
+}
