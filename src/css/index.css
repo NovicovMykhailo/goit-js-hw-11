@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 p,
 b {
   margin: 0;
