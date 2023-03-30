@@ -6,6 +6,13 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { createMarkup } from './gallery-card-markup.js';
 import { PixabayApi } from './pixabay-api';
 
+Notiflix.Notify.init({
+  width: '300px',
+  position: 'left-top',
+  closeButton: false,
+  distance: '20px	',
+});
+
 const pixabayApi = new PixabayApi();
 
 const refs = {
@@ -44,8 +51,8 @@ async function getImages(query) {
 
       return data.hits;
     })
-    .then(image => {
-      const markup = image.map(createMarkup);
+    .then(images => {
+      const markup = images.map(createMarkup);
       refs.gallery.innerHTML = markup.join('');
       addSimpleLightBox();
     });
@@ -57,11 +64,15 @@ function addSimpleLightBox() {
     docClose: true,
     doubleTapZoom: 2,
     scrollZoom: true,
+    preloading: true,
+    animationSpeed: 0,
+    animationSlide: true,
+    showCounter: false,
   };
 
   let gallery = new SimpleLightbox('.gallery a', options);
   gallery.on('show.simplelightbox');
 }
 
-// SimpleLightBox Бібліотека містить метод refresh(), 
+// SimpleLightBox Бібліотека містить метод refresh(),
 // який обов'язково потрібно викликати щоразу після додавання нової групи карток зображень.
