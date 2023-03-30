@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HomeWork #11</title>
-  
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
       rel="stylesheet"
@@ -13,7 +13,6 @@
   </head>
   <body>
     <form class="search-form" id="search-form">
-      <div class="input-spinner">
         <div class="lds-dual-ring"></div>
         <input
           class="query-input"
@@ -22,15 +21,13 @@
           autocomplete="off"
           placeholder="Search images..."
         />
-      </div>
-
-      <button type="submit">Search</button>
+      <button type="submit" class="mignifier">🔍</button>
     </form>
 
     <div class="gallery">
       <!-- Картки зображень -->
     </div>
     <button type="button" class="load-more">Load more</button>
-      <script type="module" src="./index.js"></script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>

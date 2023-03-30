@@ -28,9 +28,6 @@ img {
   position: relative;
   margin-bottom: 20px;
   margin-top: 20px;
-  gap: 15px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
 }
 
 .query-input {
@@ -38,9 +35,9 @@ img {
   font-weight: 600;
   line-height: 1;
   font: inherit;
-  padding: 7px 19px;
+  padding: 7px 50px;
 
-      width: 800px;
+  width: 88vw;
 
   border-radius: 0.8rem;
   outline: none;
@@ -62,39 +59,52 @@ img {
   outline: 1px solid #ccc;
 }
 
-button {
-  border: 1px solid #ccc;
+.mignifier {
+  display: inline-block;
   position: absolute;
-  right: 31px;
-  top: 2px;
+  left: 0px;
+  top: 0px;
+
+  height: 100%;
+  width: 5%;
+  background-color: inherit;
+  border: none;
+  border-radius: 0.7rem 0 0 0.7rem;
+}
+
+button {
   display: block;
   font-family: inherit;
   font-size: 1.1rem;
   font-weight: 400;
   line-height: 1;
-  padding: 6px 1.6rem;
+
   text-align: center;
   color: #0d172a;
 
-  background-color: #fff;
-  /* border: 0 solid #e2e8f0; */
-  border-radius: 0.8rem;
-
   transition: color 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+
   user-select: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #1e293b;
+  background-color: #6d6d6d5d;
   color: #fff;
+}
+.load-more {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border: 0 solid #e2e8f0;
+  border-radius: 0.8rem;
+  padding: 9px 10px;
+  box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
 }
 
 .lds-dual-ring {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   opacity: 1;
 
   transition: opacity 500ms linear;
@@ -106,7 +116,8 @@ button:hover {
 
   position: absolute;
   z-index: 10;
-  left: 656px;
+  right: 10px;
+  top: 5px;
 }
 
 .input-spinner {
@@ -143,7 +154,8 @@ button:hover {
 .photo-card > img {
   object-fit: cover;
   width: 100%;
-  height: 170px;
+      height: auto;
+  
   transition: all 600ms ease-in;
   cursor: zoom-in;
 }
@@ -195,6 +207,7 @@ button:hover {
   .info-item {
     grid-template-rows: 20px 20px;
   }
+
 }
 @media screen and (min-width: 1024px) {
   .gallery {
@@ -203,6 +216,9 @@ button:hover {
   }
   .photo-card > img {
     height: 318px;
+  }
+    .query-input{
+    width: calc(100vw /2);
   }
 }
 
