@@ -106,6 +106,7 @@ function loadMoreImages(query) {
     pixabayApi.fetch(query).then(data => {
       console.log(data);
       refs.arrowDawn.style.display = 'block';
+      refs.arrowUp.style.display = 'block';
       imageCounter += data.hits.length;
       refs.gallery.insertAdjacentHTML(
         'beforeEnd',
@@ -119,6 +120,7 @@ function loadMoreImages(query) {
         );
         refs.loadMoreBtn.style.display = 'none';
         refs.arrowDawn.style.display = 'none';
+        refs.arrowUp.style.display = 'none';
       }
     });
   });
@@ -154,7 +156,6 @@ function smoothScrollArrow() {
     });
   });
   refs.arrowUp.addEventListener('click', () => {
-    // document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   });
 }
