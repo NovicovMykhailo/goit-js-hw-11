@@ -74,6 +74,7 @@ async function getImages(query) {
       }
       const markup = images.map(createMarkup);
       refs.gallery.innerHTML = markup.join('');
+      smoothScroll();
 
       addSimpleLightBox();
       loadMoreImages(query);
@@ -118,10 +119,9 @@ function loadMoreImages(query) {
     pixabayApi.fetch(query).then(data => {
       console.log(data);  
       refs.gallery.insertAdjacentHTML(
-        'beforeEnd',
-        data.hits.map(createMarkup).join('')
-        // updateSimpleLightBox()
-      );
+        'beforeEnd', data.hits.map(createMarkup).join('')
+      )
+        smoothScroll()
     });
   });
 }
@@ -134,14 +134,15 @@ function clearAll() {
   refs.gallery.innerHTML = '';
 }
 
-// Зробити плавне прокручування сторінки після запиту і відтворення кожної наступної групи зображень.
-//  Ось тобі код - підказка, але розберися у ньому самостійно.
 
-// const { height: cardHeight } = document
-//   .querySelector('.gallery')
-//   .firstElementChild.getBoundingClientRect();
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
 
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: 'smooth',
-// });
+  window.scrollBy({
+    top: cardHeight * 3.2,
+    behavior: 'smooth',
+  });
+}
+
