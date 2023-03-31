@@ -75,8 +75,8 @@ img {
   border: none;
   border-radius: 0.7rem 0 0 0.7rem;
 }
-.mignifier:hover{
-  color:#638aff ;
+.mignifier:hover {
+  color: #638aff;
   background-color: rgba(0, 0, 0, 0.042);
 }
 
@@ -160,8 +160,8 @@ button:hover {
 .photo-card > img {
   object-fit: cover;
   width: 100%;
-      height: auto;
-  
+  height: auto;
+
   transition: all 600ms ease-in;
   cursor: zoom-in;
 }
@@ -213,7 +213,6 @@ button:hover {
   .info-item {
     grid-template-rows: 20px 20px;
   }
-
 }
 @media screen and (min-width: 1024px) {
   .gallery {
@@ -223,8 +222,8 @@ button:hover {
   .photo-card > img {
     height: 318px;
   }
-    .query-input{
-    width: calc(100vw /2);
+  .query-input {
+    width: calc(100vw / 2);
   }
 }
 
@@ -243,11 +242,9 @@ button:hover {
 .sl-counter {
   color: white !important;
   background-color: transparent !important;
-
 }
 .sl-close {
   border-radius: 50% !important;
-
 }
 .sl-caption {
   background: rgba(0, 0, 0, 0.4) !important;
@@ -262,4 +259,27 @@ button:hover {
   box-shadow: rgb(141 141 141 / 20%) 0px 1px 60px,
     rgb(0 0 0 / 12%) 0px -12px 30px, rgb(102 102 102 / 12%) 0px 4px 6px,
     rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px !important;
+}
+
+.arrow-down {
+
+  position: fixed;
+  height: 20px;
+  width: 20px;
+  border: 4px solid #fff;
+  border-width: 4px 4px 0 0;
+  transform: rotate(135deg);
+  cursor: pointer;
+  bottom: 30px;
+  right: 52px;
+  transition: all 300ms ease;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px #000);
+
+}
+
+.arrow-down:hover {
+  bottom: 25px;
+  border: 4px solid white;
+  border-width: 4px 4px 0 0;
 }

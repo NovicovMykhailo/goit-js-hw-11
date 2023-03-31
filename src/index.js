@@ -20,6 +20,7 @@ const refs = {
   form: document.querySelector('.search-form'),
   spinner: document.querySelector('.lds-dual-ring '),
   loadMoreBtn: document.querySelector('.load-more'),
+  arrowDawn: document.querySelector('.arrow-down'),
 };
 
 const inputEl = refs.form.elements[0];
@@ -97,21 +98,7 @@ function addSimpleLightBox() {
   gallery.on('show.simplelightbox');
   return gallery;
 }
-function updateSimpleLightBox() {
-  const options = {
-    enableKeyboard: true,
-    docClose: true,
-    doubleTapZoom: 2,
-    scrollZoom: true,
-    preloading: true,
-    animationSpeed: 0,
-    animationSlide: true,
-    // showCounter: false,
-  };
 
-  let gallery = new SimpleLightbox('.gallery a', options);
-  gallery.refresh();
-}
 
 function loadMoreImages(query) {
   refs.loadMoreBtn.addEventListener('click', () => {
@@ -121,7 +108,8 @@ function loadMoreImages(query) {
       refs.gallery.insertAdjacentHTML(
         'beforeEnd', data.hits.map(createMarkup).join('')
       )
-        smoothScroll()
+      addSimpleLightBox().refresh();
+        smoothScrollArrow();
     });
   });
 }
@@ -134,15 +122,29 @@ function clearAll() {
   refs.gallery.innerHTML = '';
 }
 
-
 function smoothScroll() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+ 
+    const { height: cardHeight } = document
+      .querySelector('.gallery')
+      .firstElementChild.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 3.2,
-    behavior: 'smooth',
-  });
+    window.scrollBy({
+      top: cardHeight * 3.2,
+      behavior: 'smooth',
+    });
+}
+function smoothScrollArrow() {
+  refs.arrowDawn.style.opacity = 1;
+  refs.arrowDawn.addEventListener('click', () => {
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 3.2,
+        behavior: 'smooth',
+      });
+  })
+
 }
 
