@@ -1,7 +1,7 @@
 
 export function createMarkup(obj) {
   return `  <a class='photo-card'
-    href=${obj.largeImageURL}>
+    href=${obj.largeImageURL} rel="lightbox[gallery1]">
     <img src=${obj.webformatURL} alt=${obj.tags} loading='lazy' />
     <div class='info'>
       <p class='info-item'>
