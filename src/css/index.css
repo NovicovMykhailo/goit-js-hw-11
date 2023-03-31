@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+html {
+  scroll-behavior: smooth;
+}
 ::-webkit-scrollbar {
   display: none;
 }
@@ -21,7 +24,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  scroll-behavior: smooth;
 }
 
 img {
@@ -68,6 +70,7 @@ img {
   position: absolute;
   left: 0px;
   top: 0px;
+  filter: grayscale();
 
   height: 100%;
   width: 5%;
@@ -198,35 +201,6 @@ button:hover {
   gap: 4px;
 }
 
-/* MEDIA */
-@media screen and (min-width: 768px) {
-  .gallery {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
-  .photo-card > img {
-    height: 218px;
-  }
-  .info {
-    font-size: 16px;
-  }
-  .info-item {
-    grid-template-rows: 20px 20px;
-  }
-}
-@media screen and (min-width: 1024px) {
-  .gallery {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
-  .photo-card > img {
-    height: 318px;
-  }
-  .query-input {
-    width: calc(100vw / 2);
-  }
-}
-
 /* SimpleLightboxx */
 
 .sl-wrapper {
@@ -260,9 +234,8 @@ button:hover {
     rgb(0 0 0 / 12%) 0px -12px 30px, rgb(102 102 102 / 12%) 0px 4px 6px,
     rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px !important;
 }
-
+/* arrow buttons */
 .arrow-down {
-
   position: fixed;
   height: 20px;
   width: 20px;
@@ -270,16 +243,66 @@ button:hover {
   border-width: 4px 4px 0 0;
   transform: rotate(135deg);
   cursor: pointer;
-  bottom: 30px;
+  bottom: 20px;
   right: 52px;
   transition: all 300ms ease;
   opacity: 0;
   filter: drop-shadow(0 0 8px #000);
-
 }
-
-.arrow-down:hover {
-  bottom: 25px;
-  border: 4px solid white;
+.arrow-up {
+  opacity: 0;
+  display: block;
+  position: fixed;
+  height: 20px;
+  width: 20px;
+  border: 4px solid #fff;
   border-width: 4px 4px 0 0;
+  transform: rotate(-45deg);
+  cursor: pointer;
+  bottom: 20px;
+  left: 52px;
+  transition: all 300ms ease;
+  filter: drop-shadow(0 0 8px #000);
+}
+/* MEDIA */
+@media screen and (min-width: 768px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+  .photo-card > img {
+    height: 218px;
+  }
+  .info {
+    font-size: 16px;
+  }
+  .info-item {
+    grid-template-rows: 20px 20px;
+  }
+  .arrow-down {
+    bottom: 30px;
+
+  }
+  .arrow-down:hover {
+    bottom: 25px;
+    border: 4px solid white;
+    border-width: 4px 4px 0 0;
+  }
+    .arrow-up:hover {
+    bottom: 25px;
+    border: 4px solid white;
+    border-width: 4px 4px 0 0;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+  .photo-card > img {
+    height: 318px;
+  }
+  .query-input {
+    width: calc(100vw / 2);
+  }
 }

@@ -21,9 +21,10 @@ const refs = {
   spinner: document.querySelector('.lds-dual-ring '),
   loadMoreBtn: document.querySelector('.load-more'),
   arrowDawn: document.querySelector('.arrow-down'),
+  arrowUp: document.querySelector('.arrow-up'),
 };
-
 const inputEl = refs.form.elements[0];
+let imageCounter = 0;
 
 refs.form.addEventListener('submit', e => {
   e.preventDefault();
@@ -49,13 +50,13 @@ async function getImages(query) {
     .fetch(query)
     .then(data => {
       if (data.totalHits !== 0) {
-        console.log(data);
-        Notiflix.Notify.success(`Hooray! We found ${data.total} images.`);
+        imageCounter += data.hits.length;
+        console.log(imageCounter);
+        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       } else if (pixabayApi.page === data.totalHits) {
         Notiflix.Notify.info(
           `We're sorry, but you've reached the end of search results.`
         );
-        refs.loadMoreBtn.style.display = 'none';
       } else {
         Notiflix.Notify.info(
           `Sorry! We can't find any images. at your request. Please try again`
@@ -99,23 +100,30 @@ function addSimpleLightBox() {
   return gallery;
 }
 
-
 function loadMoreImages(query) {
   refs.loadMoreBtn.addEventListener('click', () => {
     pixabayApi.page += 1;
     pixabayApi.fetch(query).then(data => {
-      console.log(data);  
+      console.log(data);
+      refs.arrowDawn.style.display = 'block';
+      imageCounter += data.hits.length;
       refs.gallery.insertAdjacentHTML(
-        'beforeEnd', data.hits.map(createMarkup).join('')
-      )
+        'beforeEnd',
+        data.hits.map(createMarkup).join('')
+      );
       addSimpleLightBox().refresh();
-        smoothScrollArrow();
+      smoothScrollArrow();
+      if (imageCounter === data.totalHits) {
+        Notiflix.Notify.info(
+          `We're sorry, but you've reached the end of search results.`
+        );
+        refs.loadMoreBtn.style.display = 'none';
+        refs.arrowDawn.style.display = 'none';
+      }
     });
   });
 }
 
-// SimpleLightBox Бібліотека містить метод refresh(),
-// який обов'язково потрібно викликати щоразу після додавання нової групи карток зображень.
 function clearAll() {
   refs.spinner.style.opacity = 0;
   refs.loadMoreBtn.style.display = 'none';
@@ -123,7 +131,19 @@ function clearAll() {
 }
 
 function smoothScroll() {
- 
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 3.2,
+    behavior: 'smooth',
+  });
+}
+
+function smoothScrollArrow() {
+  refs.arrowDawn.style.opacity = 1;
+  refs.arrowDawn.addEventListener('click', () => {
     const { height: cardHeight } = document
       .querySelector('.gallery')
       .firstElementChild.getBoundingClientRect();
@@ -132,19 +152,20 @@ function smoothScroll() {
       top: cardHeight * 3.2,
       behavior: 'smooth',
     });
-}
-function smoothScrollArrow() {
-  refs.arrowDawn.style.opacity = 1;
-  refs.arrowDawn.addEventListener('click', () => {
-      const { height: cardHeight } = document
-        .querySelector('.gallery')
-        .firstElementChild.getBoundingClientRect();
-
-      window.scrollBy({
-        top: cardHeight * 3.2,
-        behavior: 'smooth',
-      });
-  })
-
+  });
+  refs.arrowUp.addEventListener('click', () => {
+    // document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
 }
 
+window.onscroll = function (e) {
+  let items = document.querySelectorAll('.gallery a');
+  if (window.scrollY < 700) {
+    refs.arrowDawn.style.opacity = 0;
+    refs.arrowUp.style.opacity = 0;
+  } else if (items.length > 9) {
+    refs.arrowDawn.style.opacity = 1;
+    refs.arrowUp.style.opacity = 1;
+  }
+};
