@@ -8,17 +8,13 @@ let throttle = require('lodash.throttle');
 let debounce = require('lodash.debounce');
 
 const SLBoptions = {
-  enableKeyboard: true,
-  docClose: true,
   doubleTapZoom: 2,
-  scrollZoom: true,
-  preloading: true,
+  scrollZoom: false,
   animationSpeed: 200,
   animationSlide: true,
   loadingTimeout: 10,
   transitionIn: 'none',
   transitionOut: 'none',
-  // showCounter: false,
 };
 
 Notiflix.Notify.init({
@@ -62,7 +58,6 @@ refs.form.addEventListener('submit', e => {
   } catch {
     refs.spinner.style.opacity = 0;
     Notiflix.Notify.failure('Ooops, Something went wrong');
-    // refs.loadMoreBtn.style.display = 'none';
   }
 });
 
@@ -82,29 +77,29 @@ async function getImages(query) {
       if (data.hits !== undefined) {
         if (data.hits.length === 0 && data.hits !== undefined) {
           Notiflix.Notify.failure(`Oops, something going wrong`);
-
         } else {
           imageCounter += data.hits.length;
           Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
           return data.hits;
         }
-
       }
     })
     .then(images => {
       if (images === undefined) {
         return;
-      } else if (images !== undefined || images.length !== 0) {
+      }
+      if (images !== undefined) {
+        
+        
         const markup = images.map(createMarkup);
 
         refs.gallery.innerHTML = markup.join('');
 
         gallery.on('show.simplelightbox');
+        gallery.refresh()
 
-        if (document.querySelector('.photo-card')) {
-          smoothScroll();
-        }
+        
         window.addEventListener('scroll', debounce(onScroll, 500));
       }
     });
