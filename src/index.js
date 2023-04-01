@@ -84,7 +84,6 @@ async function getImages(query) {
       }
     })
     .then(images => {
-      console.dir(images);
       if (images !== undefined) {
         if (images.length === 0 && images !== undefined) {
           Notiflix.Notify.failure(`Oops, something going wrong`);
