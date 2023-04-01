@@ -73,22 +73,26 @@ async function getImages(query) {
   return await pixabayApi
     .fetch(query)
     .then(data => {
-      if (data.totalHits !== 0) {
-        imageCounter += data.hits.length;
-        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-
-        return data.hits;
-      } else if (data.totalHits === 0) {
+      if (data.totalHits === 0) {
         Notiflix.Notify.info(`Sorry! We can't find any images. at your request. Please try again`);
         clearAll();
+        return;
+      }
+
+      if (data.hits !== undefined) {
+        if (data.hits.length === 0 && data.hits !== undefined) {
+          Notiflix.Notify.failure(`Oops, something going wrong`);
+
+        } else {
+          imageCounter += data.hits.length;
+          Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+
+          return data.hits;
+        }
+
       }
     })
     .then(images => {
-      if (images !== undefined) {
-        if (images.length === 0 && images !== undefined) {
-          Notiflix.Notify.failure(`Oops, something going wrong`);
-        }
-      }
       if (images === undefined) {
         return;
       } else if (images !== undefined || images.length !== 0) {
