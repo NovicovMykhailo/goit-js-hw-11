@@ -73,7 +73,6 @@ async function getImages(query) {
   return await pixabayApi
     .fetch(query)
     .then(data => {
-      console.log('fetching Get');
       if (data.totalHits !== 0) {
         imageCounter += data.hits.length;
 
@@ -153,7 +152,7 @@ function smoothScrollArrow() {
 
 function infiniteLoading(query) {
   pixabayApi.page += 1;
-  console.log('fetching infinite');
+
   pixabayApi.fetch(query).then(data => {
     refs.arrowDawn.style.display = 'block';
     refs.arrowUp.style.display = 'block';
