@@ -10,7 +10,7 @@ export class PixabayApi {
   options = new URLSearchParams([
     ['orientation', 'horizontal'],
     ['safesearch', 'true'],
-    ['per_page', 9],
+    ['per_page', 40],
     ['image_type', 'photo'],
   ]);
   page = 1;

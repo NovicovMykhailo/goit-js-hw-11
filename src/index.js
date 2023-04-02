@@ -5,7 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { createMarkup } from './gallery-card-markup.js';
 import { PixabayApi } from './pixabay-api';
 let throttle = require('lodash.throttle');
-let debounce = require('lodash.debounce');
+// let debounce = require('lodash.debounce');
 
 const SLBoptions = {
   doubleTapZoom: 2,
@@ -57,7 +57,7 @@ refs.form.addEventListener('submit', e => {
     }
   } catch {
     refs.spinner.style.opacity = 0;
-    Notiflix.Notify.failure('Ooops, Something went wrong');
+    Notiflix.Notify.failure('Ooops, Something went wrong. Please refresh the page and try again');
   }
 });
 
@@ -100,7 +100,7 @@ async function getImages(query) {
         gallery.refresh()
 
         
-        window.addEventListener('scroll', debounce(onScroll, 500));
+        window.addEventListener('scroll', throttle(onScroll, 500));
       }
     });
 }
