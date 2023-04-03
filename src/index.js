@@ -4,8 +4,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { createMarkup } from './gallery-card-markup.js';
 import { PixabayApi } from './pixabay-api';
-let throttle = require('lodash.throttle');
-// let debounce = require('lodash.debounce');
+// let throttle = require('lodash.throttle');
+
 
 const SLBoptions = {
   doubleTapZoom: 2,
@@ -25,9 +25,16 @@ Notiflix.Notify.init({
   timeout: 1000,
 });
 
+const observerOptions = {
+  rootMargin: '800px',
+  threshold: 0,
+};
+
 let gallery = new SimpleLightbox('.photo-card', SLBoptions);
 
 const pixabayApi = new PixabayApi();
+
+let observer = new IntersectionObserver(needsLoading, observerOptions);
 
 const refs = {
   gallery: document.querySelector('.gallery'),
@@ -36,6 +43,7 @@ const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
   arrowDawn: document.querySelector('.arrow-down'),
   arrowUp: document.querySelector('.arrow-up'),
+  loadTrigger: document.querySelector('#trigger'),
 };
 
 const inputEl = refs.form.elements[0];
@@ -57,7 +65,7 @@ refs.form.addEventListener('submit', e => {
     }
   } catch {
     refs.spinner.style.opacity = 0;
-    Notiflix.Notify.failure('Ooops, Something went wrong. Please refresh the page and try again');
+    Notiflix.Notify.failure('Ooops, demo number of photos reached. Please refresh the page and try again');
   }
 });
 
@@ -90,40 +98,42 @@ async function getImages(query) {
         return;
       }
       if (images !== undefined) {
-        
-        
         const markup = images.map(createMarkup);
 
         refs.gallery.innerHTML = markup.join('');
 
         gallery.on('show.simplelightbox');
-        gallery.refresh()
+        gallery.refresh();
+        onScroll();
 
-        
-        window.addEventListener('scroll', throttle(onScroll, 500));
+        observer.observe(refs.loadTrigger);
+        smoothScroll();
+        // window.addEventListener('scroll', throttle(onScroll, 500));
       }
     });
 }
-
-async function onScroll() {
+function onScroll() {
   let items = document.querySelectorAll('.gallery a');
-  if (window.scrollY < 200) {
-    refs.arrowDawn.style.opacity = 0;
-    refs.arrowUp.style.opacity = 0;
-    refs.arrowDawn.style.display = 'none';
-    refs.arrowUp.style.display = 'none';
-  } else if (items.length > 3) {
-    refs.arrowDawn.style.display = 'block';
-    refs.arrowUp.style.display = 'block';
-    refs.arrowDawn.style.opacity = 1;
-    refs.arrowUp.style.opacity = 1;
-  }
-  const threshold = document.body.offsetHeight - window.innerHeight / 4;
-  const position = window.scrollY + window.innerHeight;
+  window.addEventListener('scroll', () => {
+      if (window.scrollY < 200) {
+        refs.arrowDawn.style.opacity = 0;
+        refs.arrowUp.style.opacity = 0;
+        refs.arrowDawn.style.display = 'none';
+        refs.arrowUp.style.display = 'none';
+      } else if (items.length > 3) {
+        refs.arrowDawn.style.display = 'block';
+        refs.arrowUp.style.display = 'block';
+        refs.arrowDawn.style.opacity = 1;
+        refs.arrowUp.style.opacity = 1;
+      }
+  })
 
-  if (position >= threshold) {
-    await infiniteLoading(searchQue);
-  }
+  // const threshold = document.body.offsetHeight - window.innerHeight / 4;
+  // const position = window.scrollY + window.innerHeight;
+
+  // if (position >= threshold) {
+  //   await infiniteLoading(searchQue);
+  // }
 }
 
 function clearAll() {
@@ -136,14 +146,12 @@ function smoothScroll() {
   const { height: cardHeight } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2.5,
+    top: cardHeight * 1.2,
     behavior: 'smooth',
   });
 }
 
 function smoothScrollArrow() {
-  refs.arrowDawn.style.opacity = 1;
-  refs.arrowUp.style.opacity = 1;
   refs.arrowDawn.addEventListener('click', () => {
     const { height: cardHeight } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
 
@@ -161,8 +169,6 @@ function infiniteLoading(query) {
   pixabayApi.page += 1;
 
   pixabayApi.fetch(query).then(data => {
-    refs.arrowDawn.style.display = 'block';
-    refs.arrowUp.style.display = 'block';
     imageCounter += data.hits.length;
 
     if (data.hits.length === 0) {
@@ -171,5 +177,13 @@ function infiniteLoading(query) {
     refs.gallery.insertAdjacentHTML('beforeEnd', data.hits.map(createMarkup).join(''));
     gallery.refresh();
     smoothScrollArrow();
+  });
+}
+
+function needsLoading(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && searchQue !== null) {
+      infiniteLoading(searchQue);
+    }
   });
 }
